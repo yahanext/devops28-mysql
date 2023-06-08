@@ -100,6 +100,30 @@ mysql>
 Предоставьте привелегии пользователю `test` на операции SELECT базы `test_db`.
     
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES, получите данные по пользователю `test` и 
+```
+mysql> create user 'test'@'localhost' 
+    ->     identified with mysql_native_password by 'test-pass' 
+    ->     with max_queries_per_hour 100
+    ->     password expire interval 180 day 
+    ->     failed_login_attempts 3 
+    ->     attribute '{"fname": "James","lname": "Pretty"}';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant select on test_db.* to test@'localhost';
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+mysql>  select * from INFORMATION_SCHEMA.USER_ATTRIBUTEs where user = 'test';
++------+-----------+---------------------------------------+
+| USER | HOST      | ATTRIBUTE                             |
++------+-----------+---------------------------------------+
+| test | localhost | {"fname": "James", "lname": "Pretty"} |
++------+-----------+---------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> 
+```
+
 **приведите в ответе к задаче**.
 
 ## Задача 3

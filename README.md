@@ -8,6 +8,11 @@
 ## Задача 1
 
 Используя Docker, поднимите инстанс MySQL (версию 8). Данные БД сохраните в volume.
+```
+yaha@yahawork:~/mysql$ docker run --name mysql     -e MYSQL_DATABASE=test_db     -e MYSQL_ROOT_PASSWORD=sapassword     -v $PWD/backup:/data/backup     -v $PWD/data:/var/lib/mysql     -p 3306:3306     -d mysql:8.0
+76b02aa64b81710da865f56572f323a0857ad2c83f4351416b9d9f51dd7688f5
+```
+
 
 Изучите [бэкап БД](https://github.com/netology-code/virt-homeworks/tree/virt-11/06-db-03-mysql/test_data) и 
 восстановитесь из него.
@@ -17,10 +22,66 @@
 Используя команду `\h`, получите список управляющих команд.
 
 Найдите команду для выдачи статуса БД и **приведите в ответе** из её вывода версию сервера БД.
+```
+mysql> \s
+--------------
+mysql  Ver 8.0.33 for Linux on x86_64 (MySQL Community Server - GPL)
+
+Connection id:		10
+Current database:	
+Current user:		root@localhost
+SSL:			Not in use
+Current pager:		stdout
+Using outfile:		''
+Using delimiter:	;
+Server version:		8.0.33 MySQL Community Server - GPL
+Protocol version:	10
+Connection:		Localhost via UNIX socket
+Server characterset:	utf8mb4
+Db     characterset:	utf8mb4
+Client characterset:	latin1
+Conn.  characterset:	latin1
+UNIX socket:		/var/run/mysqld/mysqld.sock
+Binary data as:		Hexadecimal
+Uptime:			9 min 4 sec
+
+Threads: 2  Questions: 35  Slow queries: 0  Opens: 139  Flush tables: 3  Open tables: 57  Queries per second avg: 0.064
+--------------
+
+mysql> 
+```
+
 
 Подключитесь к восстановленной БД и получите список таблиц из этой БД.
+```
+mysql> use test_db
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_test_db |
++-------------------+
+| orders            |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> 
+```
 
 **Приведите в ответе** количество записей с `price` > 300.
+```
+mysql> select count(*) from orders where price>300;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> 
+```
 
 В следующих заданиях мы будем продолжать работу с этим контейнером.
 

@@ -233,7 +233,7 @@ innodb_log_buffer_size = 1M
 innodb_buffer_pool_size = 2G
 innodb_log_file_size = 100M
 bash-4.4# 
-
+```
 ---
 
 ### Как оформить ДЗ
